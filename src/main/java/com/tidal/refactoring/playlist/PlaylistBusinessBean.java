@@ -77,6 +77,8 @@ public class PlaylistBusinessBean {
             playList.getPlayListTracks().clear();
             playList.getPlayListTracks().addAll(original);
             playList.setNrOfTracks(original.size());
+            
+            playlistDaoBean.updatePlayList(uuid, playList);
 
             return added;
 
@@ -101,12 +103,13 @@ public class PlaylistBusinessBean {
 
             List<PlayListTrack> playListTracks = new ArrayList<PlayListTrack>(playList.getPlayListTracks());
 
+            Collections.sort(playListTracks);
+
 			if (playListTracks.size() < indexes.size()
 					|| playListTracks.get(playListTracks.size() - 1).getIndex() < indexes.get(indexes.size() - 1)) {
 				throw new PlaylistException("Playlist cannot have more than " + indexes.size() + " tracks");
 			}
 			         
-            Collections.sort(playListTracks);
             List<PlayListTrack> removeableList = new ArrayList<>();
             for(PlayListTrack eachTrack: playListTracks) {
             	if(eachTrack.getIndex()==indexes.get(0)) {
@@ -128,6 +131,8 @@ public class PlaylistBusinessBean {
             playList.getPlayListTracks().clear();
             playList.getPlayListTracks().addAll(playListTracks);
             playList.setNrOfTracks(playListTracks.size());
+            
+            playlistDaoBean.updatePlayList(uuid, playList);
             
 			return playListTracks;
 		} catch (Exception e) {

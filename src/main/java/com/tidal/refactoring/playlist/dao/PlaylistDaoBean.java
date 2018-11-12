@@ -22,8 +22,7 @@ public class PlaylistDaoBean {
         }
 
         //return default playlist
-		playlists.put(uuid, createPlayList(uuid));
-		return playlists.get(uuid);
+		return createPlayList(uuid);
 	}
 
     private PlayList createPlayList(String uuid) {
@@ -68,5 +67,9 @@ public class PlaylistDaoBean {
         track.setTitle("Track no: " + trackNumber);
 
         return track;
+    }
+    
+    public void updatePlayList(String uuid, PlayList playList) {
+    	playlists.put(uuid, playList);
     }
 }

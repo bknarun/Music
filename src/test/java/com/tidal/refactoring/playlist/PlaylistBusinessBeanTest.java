@@ -84,7 +84,7 @@ public class PlaylistBusinessBeanTest {
 		assertTrue(playListSize > 0);
 		List<Integer> tracksTobeDeleted = Arrays.asList(3); 
         List<PlayListTrack> playListTracksAfterDeletion = playlistBusinessBean.removeTracks(uuid, tracksTobeDeleted);
-		assertTrue(playListSize-1 == playListTracksAfterDeletion.size());
+		assertTrue(386-1 == playListTracksAfterDeletion.size());
     }
     
     @Test
@@ -96,7 +96,7 @@ public class PlaylistBusinessBeanTest {
 		assertTrue(playListSize > 0);
 		List<Integer> tracksTobeDeleted = Arrays.asList(3, 4, 5);
 		List<PlayListTrack> playListTracksAfterDeletion = playlistBusinessBean.removeTracks(uuid, tracksTobeDeleted);
-		assertTrue(playListSize - 3 == playListTracksAfterDeletion.size());
+		assertTrue(386 - 3 == playListTracksAfterDeletion.size());
 	}
     
     @Test(expectedExceptions=PlaylistException.class)
