@@ -99,17 +99,16 @@ public class PlaylistBusinessBean {
 				throw new PlaylistException("Playlist cannot have more than " + 500 + " tracks");
 			}
 
-			if (playList.getPlayListTracks().size() < indexes.size()) {
+            List<PlayListTrack> playListTracks = new ArrayList<PlayListTrack>(playList.getPlayListTracks());
+
+			if (playListTracks.size() < indexes.size()
+					|| playListTracks.get(playListTracks.size() - 1).getIndex() < indexes.get(indexes.size() - 1)) {
 				throw new PlaylistException("Playlist cannot have more than " + indexes.size() + " tracks");
 			}
 			         
-            Set<PlayListTrack> originalSet =  playList.getPlayListTracks();
-
-            List<PlayListTrack> original = new ArrayList<PlayListTrack>(originalSet);
-
-            Collections.sort(original);
+            Collections.sort(playListTracks);
             List<PlayListTrack> removeableList = new ArrayList<>();
-            for(PlayListTrack eachTrack: original) {
+            for(PlayListTrack eachTrack: playListTracks) {
             	if(eachTrack.getIndex()==indexes.get(0)) {
             		removeableList.add(eachTrack);
             		indexes.remove(0);
@@ -119,18 +118,18 @@ public class PlaylistBusinessBean {
             	}
             }
             
-            original.removeAll(removeableList);
+            playListTracks.removeAll(removeableList);
             
             int i = 0;
-            for (PlayListTrack track : original) {
+            for (PlayListTrack track : playListTracks) {
                 track.setIndex(i++);
             }
 
             playList.getPlayListTracks().clear();
-            playList.getPlayListTracks().addAll(original);
-            playList.setNrOfTracks(original.size());
+            playList.getPlayListTracks().addAll(playListTracks);
+            playList.setNrOfTracks(playListTracks.size());
             
-			return original;
+			return playListTracks;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new PlaylistException("Generic error");

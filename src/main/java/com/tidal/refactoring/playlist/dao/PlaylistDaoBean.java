@@ -22,8 +22,9 @@ public class PlaylistDaoBean {
         }
 
         //return default playlist
-        return createPlayList(uuid);
-    }
+		playlists.put(uuid, createPlayList(uuid));
+		return playlists.get(uuid);
+	}
 
     private PlayList createPlayList(String uuid) {
         PlayList trackPlayList = new PlayList();
